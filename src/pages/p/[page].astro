@@ -1,10 +1,10 @@
 ---
-import { getBlogList, getCategoryList } from '@libs/microcms.ts';
-import Layout from '@layouts/Layout.astro';
-import BlogList from '@components/BlogList.astro';
-import Pagination from '@components/Pagination.astro';
-import CategoryList from '@components/CategoryList.astro';
-import { LIMIT } from '@constants/index.ts';
+import { getBlogList, getCategoryList } from "@libs/microcms.ts";
+import Layout from "@layouts/Layout.astro";
+import BlogList from "@components/BlogList.astro";
+import Pagination from "@components/Pagination.astro";
+import CategoryList from "@components/CategoryList.astro";
+import { LIMIT } from "@constants/index.ts";
 export const prerender = true;
 
 export async function getStaticPaths() {
@@ -23,8 +23,8 @@ const { page } = Astro.params;
 const currentPage = Number(page) || 1;
 
 const Meta = {
- title: `Page ${currentPage}`,
-}
+  title: `Page ${currentPage}`,
+};
 
 // 記事を取得
 const { contents: blogs, totalCount } = await getBlogList({
@@ -41,7 +41,7 @@ const { contents: categories } = await getCategoryList();
     <BlogList blogs={blogs} />
     <Pagination totalCount={totalCount} current={currentPage} />
   </div>
-  
+
   <div class="space-y-8">
     <CategoryList categories={categories} />
   </div>

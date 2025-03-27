@@ -16,7 +16,8 @@
     "astro": "^5.5.5",
     "dayjs": "^1.11.13",
     "microcms-js-sdk": "^3.2.0",
-    "microcms-rich-editor-handler": "^1.0.1"
+    "microcms-rich-editor-handler": "^1.0.1",
+    "shiki": "^3.2.1"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

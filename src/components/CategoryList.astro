@@ -1,6 +1,6 @@
 ---
 // src/components/CategoryList.astro
-import type { Category } from '@libs/microcms.ts';
+import type { Category } from "@libs/microcms.ts";
 
 interface Props {
   categories: Category[];
@@ -14,11 +14,18 @@ const { categories } = Astro.props;
       <h3 class="text-lg font-medium">Categories</h3>
     </div>
     <ul class="space-y-2 p-6">
-      {categories.map((category) => (
-        <li>
-          <a href={`/category/${category.id}`} class="text-sm hover:underline">{category.name}</a>
-        </li>
-      ))}
+      {
+        categories.map((category) => (
+          <li>
+            <a
+              href={`/category/${category.id}`}
+              class="text-sm hover:underline"
+            >
+              {category.name}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </div>

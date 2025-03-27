@@ -1,8 +1,8 @@
 ---
-import { getBlogList, getBlogDetail, getCategoryList, type Blog } from '@libs/microcms.ts';
-import Layout from '@layouts/Layout.astro';
-import BlogPost from '@components/BlogPost.astro';
-import CategoryList from '@components/CategoryList.astro';
+import { getBlogDetail, getCategoryList } from "@libs/microcms.ts";
+import Layout from "@layouts/Layout.astro";
+import BlogPost from "@components/BlogPost.astro";
+import CategoryList from "@components/CategoryList.astro";
 export const prerender = false;
 
 // パラメータを取得
@@ -16,16 +16,18 @@ const draftKey = url.searchParams.get("draftKey");
 // キャッシュポリシーの定義
 const cachePolicies = {
   noCache: "no-store, no-cache, max-age=0, must-revalidate",
-  publicIsr: "public, s-maxage=30, stale-while-revalidate=30",
+  publicIsr: "public, s-maxage=180, stale-while-revalidate=180",
 };
 
 // 詳細データを取得
 const blog = await getBlogDetail(id, draftKey ? { draftKey } : {});
 
 const Meta = {
- title: blog ? blog.title : 'ブログ記事が見つかりません',
- image: blog.thumbnail ? blog.thumbnail.url : new URL('/assets/images/og.png', Astro.site),
-}
+  title: blog ? blog.title : "ブログ記事が見つかりません",
+  image: blog.thumbnail
+    ? blog.thumbnail.url
+    : new URL("/assets/images/og.png", Astro.site),
+};
 
 // キャッシュポリシーを設定
 const cachePolicy = draftKey ? cachePolicies.noCache : cachePolicies.publicIsr;
@@ -37,11 +39,13 @@ const { contents: categories } = await getCategoryList();
 
 <Layout Meta={Meta}>
   <div class="space-y-8">
-    {blog ? (
-      <BlogPost blog={blog} />
-    ) : (
-      <p class="text-red-500 text-center text-lg">このブログ記事は存在しません。</p>
-    )}
+    {
+      blog ? (
+        <BlogPost blog={blog} />
+      ) : (
+        <p class="text-center text-lg">このブログ記事は存在しません。</p>
+      )
+    }
   </div>
 
   <div class="space-y-8">

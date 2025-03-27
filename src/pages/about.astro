@@ -1,12 +1,12 @@
 ---
-import Layout from '@layouts/Layout.astro';
-import { getSettings } from '@libs/microcms.ts';
+import Layout from "@layouts/Layout.astro";
+import { getSettings } from "@libs/microcms.ts";
 export const prerender = true;
 const settings = await getSettings();
 
 const Meta = {
- title: 'About',
-}
+  title: "About",
+};
 ---
 
 <Layout Meta={Meta}>

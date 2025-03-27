@@ -1,7 +1,7 @@
-import type { Config } from 'tailwindcss';
+import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ['./src/**/*.{astro,html,js,ts,jsx,tsx}'],
+  content: ["./src/**/*.{astro,html,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {

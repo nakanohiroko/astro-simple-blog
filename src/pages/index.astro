@@ -1,17 +1,17 @@
 ---
-import { getBlogList, getCategoryList } from '@libs/microcms.ts';
-import Layout from '@layouts/Layout.astro';
-import BlogList from '@components/BlogList.astro';
-import Pagination from '@components/Pagination.astro';
-import CategoryList from '@components/CategoryList.astro';
-import { LIMIT } from '@constants/index.ts';
-import { getSettings } from '@libs/microcms.ts';
+import { getBlogList, getCategoryList } from "@libs/microcms.ts";
+import Layout from "@layouts/Layout.astro";
+import BlogList from "@components/BlogList.astro";
+import Pagination from "@components/Pagination.astro";
+import CategoryList from "@components/CategoryList.astro";
+import { LIMIT } from "@constants/index.ts";
+import { getSettings } from "@libs/microcms.ts";
 export const prerender = true;
 
 const settings = await getSettings();
 const Meta = {
- title: settings?.title || 'Set Your Title Here',
-}
+  title: settings?.title || "Set Your Title Here",
+};
 
 // ブログ記事リストと合計数を取得
 const { contents: blogs, totalCount } = await getBlogList({

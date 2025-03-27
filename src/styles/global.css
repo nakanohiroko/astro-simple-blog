@@ -6,12 +6,12 @@ body {
   @apply font-body;
 }
 
-/* ✅ 段落 */
+/* 段落 */
 .entry-content p {
   @apply mb-4 leading-relaxed;
 }
 
-/* ✅ 画像やキャプション */
+/* 画像とキャプション */
 .entry-content figure {
   @apply mb-4;
 }
@@ -20,43 +20,48 @@ body {
   @apply leading-relaxed text-sm text-black/50 italic pt-1;
 }
 
-/* ✅ 見出し（h1〜h5） */
+/* 見出し（h1〜h5） */
 .entry-content h1 {
-  @apply text-3xl font-bold mt-8 mb-4 text-gray-900;
+  @apply text-3xl font-bold mt-8 mb-4 pt-2 text-gray-900;
 }
 
 .entry-content h2 {
-  @apply text-2xl font-semibold mt-6 mb-3 text-gray-800;
+  @apply text-2xl font-semibold mt-6 mb-3 pt-2 text-gray-800;
 }
 
 .entry-content h3 {
-  @apply text-xl font-medium mt-5 mb-2 text-gray-700;
+  @apply text-xl font-medium mt-5 mb-2 pt-2 text-gray-700;
 }
 
 .entry-content h4 {
-  @apply text-lg font-semibold mt-4 mb-2 text-gray-700;
+  @apply text-lg font-semibold mt-4 mb-2 pt-2 text-gray-700;
 }
 
 .entry-content h5 {
-  @apply text-base font-medium mt-3 mb-2 text-gray-600;
+  @apply text-base font-medium mt-3 mb-2 pt-2 text-gray-600;
 }
 
-/* ✅ 区切り線（hr） */
+/* 区切り線（hr） */
 .entry-content hr {
   @apply border-t border-gray-300 my-6;
 }
 
-/* ✅ 引用（blockquote） */
+/* 引用（blockquote） */
 .entry-content blockquote {
   @apply border-l-4 border-gray-400 pl-4 italic text-gray-600 my-4;
 }
 
-/* ✅ テーブル */
+/* テーブル */
 .entry-content table {
   @apply w-full border-collapse border border-gray-300 text-sm my-6;
 }
 
-.entry-content th, .entry-content td {
+.entry-content table p {
+  @apply mb-0;
+}
+
+.entry-content th,
+.entry-content td {
   @apply border border-gray-300 px-4 py-2;
 }
 
@@ -64,7 +69,7 @@ body {
   @apply bg-gray-100 font-semibold text-gray-800;
 }
 
-/* ✅ 箇条書き（ul/li, ol/li） */
+/* 箇条書き（ul/li, ol/li） */
 .entry-content ul {
   @apply list-disc pl-5 mb-4;
 }
@@ -77,17 +82,19 @@ body {
   @apply mb-2 leading-relaxed;
 }
 
-/* ✅ コードブロック（pre） */
-.entry-content pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm my-4;
+/* コードブロック（fileName, pre, code） */
+.entry-content span.fileName {
+  @apply inline-block bg-gray-600 text-white text-xs px-3 py-1 font-mono rounded-t-md;
 }
 
-/* ✅ インラインコード（code） */
+.entry-content pre {
+  @apply p-4 overflow-x-auto;
+}
+
 .entry-content code {
   @apply bg-gray-200 text-gray-800 px-1 py-0.5 rounded text-sm font-mono;
 }
 
-/* ✅ コードブロック内の code */
 .entry-content pre code {
   @apply bg-transparent text-inherit p-0;
 }

@@ -4,7 +4,12 @@ const { title } = Astro.props;
 ---
 
 <footer class="bg-muted border-t">
-  <div class="container mx-auto px-4 md:px-6 py-6 flex items-center justify-between">
-    <p class="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} {title}</p>
+  <div
+    class="container mx-auto px-4 md:px-6 py-6 flex items-center justify-between"
+  >
+    <p class="text-sm text-muted-foreground">
+      &copy; {new Date().getFullYear()}
+      {title}
+    </p>
   </div>
 </footer>

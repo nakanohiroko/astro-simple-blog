@@ -2,20 +2,20 @@ import type {
   MicroCMSQueries,
   MicroCMSListContent,
   MicroCMSImage,
-} from 'microcms-js-sdk';
-import { createClient } from 'microcms-js-sdk';
+} from "microcms-js-sdk";
+import { createClient } from "microcms-js-sdk";
 
 export const client = createClient({
-  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN || '',
-  apiKey: import.meta.env.MICROCMS_API_KEY || '',
+  serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN || "",
+  apiKey: import.meta.env.MICROCMS_API_KEY || "",
 });
 
 export type Blog = {
   title: string;
-  description:string;
+  description: string;
   content: string;
   category: Category[];
-  thumbnail:MicroCMSImage;
+  thumbnail: MicroCMSImage;
 } & MicroCMSListContent;
 
 export type Category = {
@@ -29,7 +29,7 @@ export interface Settings {
 }
 
 export const getBlogList = async (queries?: MicroCMSQueries) => {
-  return await client.getList<Blog>({ endpoint: 'blog', queries });
+  return await client.getList<Blog>({ endpoint: "blog", queries });
 };
 
 export const getBlogDetail = async (
@@ -37,17 +37,17 @@ export const getBlogDetail = async (
   queries?: MicroCMSQueries
 ) => {
   return await client.getListDetail<Blog>({
-    endpoint: 'blog',
+    endpoint: "blog",
     contentId,
     queries,
   });
 };
 
 export const getCategoryList = async (queries?: MicroCMSQueries) => {
-  return client.getList<Category>({ endpoint: 'categories', queries });
-}
+  return client.getList<Category>({ endpoint: "categories", queries });
+};
 
 export const getSettings = async (): Promise<Settings> => {
-  const data = await client.get({ endpoint: 'settings' });
+  const data = await client.get({ endpoint: "settings" });
   return data as Settings;
 };

@@ -1,5 +1,11 @@
 ---
-import { microCMSRichEditorHandler, responsiveImageTransformer, tocExtractor } from "microcms-rich-editor-handler";
+import {
+  microCMSRichEditorHandler,
+  syntaxHighlightingByShikiTransformer,
+  responsiveImageTransformer,
+  codeBlockFileNameTransformer,
+  tocExtractor,
+} from "microcms-rich-editor-handler";
 import Date from "@components/Date.astro";
 import type { Category } from "@libs/microcms";
 
@@ -9,9 +15,27 @@ const {
   html,
   data: { toc },
 } = await microCMSRichEditorHandler(blog.content, {
-  transformers: [responsiveImageTransformer()],
+  transformers: [
+    responsiveImageTransformer(),
+    codeBlockFileNameTransformer({
+      attributes: {
+        class: "fileName",
+      },
+    }),
+    syntaxHighlightingByShikiTransformer({
+      defaultHighlightOptions: {
+        lang: "javascript",
+        theme: "github-dark",
+      },
+    }),
+  ],
   extractors: {
-    toc: [tocExtractor(), { phase: "before" }],
+    toc: [
+      tocExtractor({
+        ignoreLevels: [4, 5],
+      }),
+      { phase: "before" },
+    ],
   },
 });
 
@@ -26,42 +50,47 @@ blog.content = html;
   </p>
 
   <div class="flex flex-wrap gap-2 mb-8">
-    {blog.category?.length > 0 ? (
-      blog.category.map((cat: Category) => (
-        <a
-          href={`/category/${cat.id}`}
-          class="category bg-gray-600 text-white px-3 py-1 rounded-full text-xs hover:bg-gray-700 transition"
-        >
-          {cat.name}
-        </a>
-      ))
-    ) : (
-      <span class="text-gray-400 text-xs">No Category</span>
-    )}
+    {
+      blog.category?.length > 0 ? (
+        blog.category.map((cat: Category) => (
+          <a
+            href={`/category/${cat.id}`}
+            class="category bg-gray-600 text-white px-3 py-1 rounded-full text-xs hover:bg-gray-700 transition"
+          >
+            {cat.name}
+          </a>
+        ))
+      ) : (
+        <span class="text-gray-400 text-xs">No Category</span>
+      )
+    }
   </div>
 
-  {toc.length > 0 && (
-    <aside class="mb-8 p-4 border border-gray-200 bg-gray-50 rounded-md shadow-sm">
-      <h2 class="text-lg font-semibold text-gray-700 mb-2">目次</h2>
-      <ul class="space-y-1 text-sm text-gray-600">
-        {toc.map((item) => {
-          let marginLeftClass = "";
-          if (item.level === 2) marginLeftClass = "ml-2";
-          if (item.level === 3) marginLeftClass = "ml-4";
-          if (item.level === 4) marginLeftClass = "ml-6";
-          if (item.level === 5) marginLeftClass = "ml-8";
-  
-          return (
-            <li class={`pl-4 border-l-2 border-gray-300 ${marginLeftClass}`}>
-              <a href={`#${item.id}`} class="block hover:text-blue-500 transition">
-                {item.text}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </aside>
-  )}
+  {
+    toc.length > 0 && (
+      <aside class="mb-8 p-4 border border-gray-200 bg-gray-50 rounded-md shadow-sm">
+        <h2 class="text-lg font-semibold text-gray-700 mb-2">目次</h2>
+        <ul class="space-y-1 text-sm text-gray-600">
+          {toc.map((item) => {
+            let marginLeftClass = "";
+            if (item.level === 2) marginLeftClass = "ml-3";
+            if (item.level === 3) marginLeftClass = "ml-6";
+
+            return (
+              <li class={`pl-4 border-l-2 border-gray-300 ${marginLeftClass}`}>
+                <a
+                  href={`#${item.id}`}
+                  class="block hover:text-blue-500 transition"
+                >
+                  {item.text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </aside>
+    )
+  }
 
   <div set:html={blog.content} class="entry-content prose max-w-none" />
 </article>
