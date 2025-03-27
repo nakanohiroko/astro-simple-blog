@@ -1,8 +1,9 @@
 ---
 // src/layouts/Layout.astro
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { getSettings } from '../libs/microcms.ts';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import { getSettings } from '@libs/microcms.ts';
+import '@styles/global.css';
 const settings = await getSettings();
 const siteTitle = settings?.title || 'Set Your Title Here';
 const siteDescription = settings?.description || 'Set Your Description Here';
@@ -27,7 +28,6 @@ const ogImage = Meta.image ? Meta.image : new URL('/assets/images/og.png', Astro
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="/src/styles/global.css">
 		<!-- OG settings -->
     <meta property="og:site_name" content={siteTitle} />
     <meta property="og:title" content={pageTitle} />
