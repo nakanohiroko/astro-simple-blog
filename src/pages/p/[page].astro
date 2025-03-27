@@ -1,21 +1,35 @@
 ---
 import { getBlogList, getCategoryList } from '@libs/microcms.ts';
-import Layout from '@layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import BlogList from '@components/BlogList.astro';
 import Pagination from '@components/Pagination.astro';
 import CategoryList from '@components/CategoryList.astro';
 import { LIMIT } from '@constants/index.ts';
-import { getSettings } from '@libs/microcms.ts';
 export const prerender = true;
 
-const settings = await getSettings();
-const Meta = {
- title: settings?.title || 'Set Your Title Here',
+export async function getStaticPaths() {
+  // ブログの総記事数を取得
+  const { totalCount } = await getBlogList({ limit: 1 });
+  const totalPages = Math.ceil(totalCount / LIMIT);
+
+  // ページ数分のパスを生成
+  return Array.from({ length: totalPages }).map((_, i) => ({
+    params: { page: (i + 1).toString() },
+  }));
 }
 
-// ブログ記事リストと合計数を取得
+// `page` パラメータを取得
+const { page } = Astro.params;
+const currentPage = Number(page) || 1;
+
+const Meta = {
+ title: `Page ${currentPage}`,
+}
+
+// 記事を取得
 const { contents: blogs, totalCount } = await getBlogList({
   limit: LIMIT,
+  offset: (currentPage - 1) * LIMIT,
 });
 
 // カテゴリーリストを取得
@@ -25,9 +39,9 @@ const { contents: categories } = await getCategoryList();
 <Layout Meta={Meta}>
   <div class="space-y-8">
     <BlogList blogs={blogs} />
-    <Pagination totalCount={totalCount} />
+    <Pagination totalCount={totalCount} current={currentPage} />
   </div>
-
+  
   <div class="space-y-8">
     <CategoryList categories={categories} />
   </div>

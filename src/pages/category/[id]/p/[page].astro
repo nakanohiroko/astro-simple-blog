@@ -1,0 +1,58 @@
+---
+import { getBlogList, getCategoryList } from '@libs/microcms.ts';
+import Layout from '@layouts/Layout.astro';
+import BlogList from '@components/BlogList.astro';
+import Pagination from '@components/Pagination.astro';
+import { LIMIT } from '@constants/index.ts';
+export const prerender = true;
+
+// 静的ルートを生成
+export async function getStaticPaths() {
+  const { contents: categories } = await getCategoryList();
+  let paths = [];
+
+  for (const category of categories) {
+    const { totalCount } = await getBlogList({ limit: 1, filters: `category[contains]${category.id}` });
+    const totalPages = Math.ceil(totalCount / LIMIT);
+
+    for (let i = 1; i <= totalPages; i++) {
+      paths.push({ params: { id: category.id, page: i.toString() } });
+    }
+  }
+  return paths;
+}
+
+// パラメータを取得
+const { id, page } = Astro.params;
+const currentPage = Number(page) || 1;
+
+// カテゴリー情報を取得
+const { contents: categories } = await getCategoryList();
+const category = categories.find((cat) => cat.id === id);
+
+const Meta = {
+ title: category ? `Page ${currentPage} | ${category.name} の記事一覧` : 'カテゴリが見つかりません',
+}
+
+// カテゴリーに紐づく記事を取得
+const { contents: blogs, totalCount } = category
+  ? await getBlogList({
+      limit: LIMIT,
+      offset: (currentPage - 1) * LIMIT,
+      filters: `category[contains]${category.id}`,
+    })
+  : { contents: [], totalCount: 0 };
+---
+
+<Layout Meta={Meta}>
+  <div class="space-y-8">
+    {category ? (
+      <>
+        <BlogList blogs={blogs} />
+        <Pagination totalCount={totalCount} current={currentPage} basePath={`/category/${id}`} category={id} />
+      </>
+    ) : (
+      <p class="text-red-500">このカテゴリは存在しません。</p>
+    )}
+  </div>
+</Layout>

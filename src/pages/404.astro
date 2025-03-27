@@ -1,0 +1,15 @@
+---
+import Layout from "@layouts/Layout.astro";
+export const prerender = true;
+
+const Meta = {
+ title: 'Page Not Found',
+}
+---
+
+<Layout Meta={Meta}>
+  <article class="prose max-w-none">
+    <h1 class="text-3xl font-medium mb-3 leading-normal">Page Not Found</h1>
+    <p>お探しのページが見つかりませんでした。</p>
+  </article>
+</Layout>

@@ -1,0 +1,55 @@
+---
+import { LIMIT } from '@constants/index.ts';
+
+interface Props {
+  totalCount: number;
+  current?: number;
+  basePath?: string;
+  q?: string;
+  category?: string;
+}
+
+const { totalCount, current = 1, basePath = '', q, category } = Astro.props;
+const totalPages = Math.ceil(totalCount / LIMIT);
+
+// ページ数が1以下なら何も表示しない
+if (totalPages <= 1) {
+  return;
+}
+
+const pages = Array.from({ length: totalPages }).map((_, i) => i + 1);
+
+// ページネーションのURLを生成
+const getPageUrl = (page: number) => {
+  let path;
+  
+  if (category) {
+    path = page === 1 ? `/category/${category}` : `/category/${category}/p/${page}`;
+  } else {
+    path = page === 1 ? '/' : `${basePath}/p/${page}`;
+  }
+
+  return q ? `${path}?q=${q}` : path;
+};
+---
+
+<ul class="flex justify-center gap-2 py-4">
+  {pages.map((p) => (
+    <li>
+      {current !== p ? (
+        <a
+          href={getPageUrl(p)}
+          class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition"
+        >
+          {p}
+        </a>
+      ) : (
+        <span
+          class="px-4 py-2 border border-blue-600 bg-blue-600 text-white rounded-md font-bold hover:bg-blue-700 transition"
+        >
+          {p}
+        </span>
+      )}
+    </li>
+  ))}
+</ul>

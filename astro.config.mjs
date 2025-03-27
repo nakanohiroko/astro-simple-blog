@@ -1,5 +1,10 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
+import tailwind from '@astrojs/tailwind';
+import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  site: 'https://astro-simple-blog.vercel.app',
+  output: 'static',
+  integrations: [tailwind()],
+  adapter: vercel(),
+});
