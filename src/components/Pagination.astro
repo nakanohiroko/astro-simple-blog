@@ -1,4 +1,5 @@
 ---
+// src/components/Pagination.astro
 import { LIMIT } from "@constants/index.ts";
 
 interface Props {
@@ -12,14 +13,12 @@ interface Props {
 const { totalCount, current = 1, basePath = "", q, category } = Astro.props;
 const totalPages = Math.ceil(totalCount / LIMIT);
 
-// ページ数が1以下なら何も表示しない
 if (totalPages <= 1) {
   return;
 }
 
 const pages = Array.from({ length: totalPages }).map((_, i) => i + 1);
 
-// ページネーションのURLを生成
 const getPageUrl = (page: number) => {
   let path;
 

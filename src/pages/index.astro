@@ -9,17 +9,16 @@ import { getSettings } from "@libs/microcms.ts";
 export const prerender = true;
 
 const settings = await getSettings();
-const Meta = {
-  title: settings?.title || "Set Your Title Here",
-};
 
-// ブログ記事リストと合計数を取得
 const { contents: blogs, totalCount } = await getBlogList({
   limit: LIMIT,
 });
 
-// カテゴリーリストを取得
 const { contents: categories } = await getCategoryList();
+
+const Meta = {
+  title: settings?.title || "Set Your Title Here",
+};
 ---
 
 <Layout Meta={Meta}>

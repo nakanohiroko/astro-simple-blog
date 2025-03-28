@@ -7,7 +7,6 @@ import CategoryList from "@components/CategoryList.astro";
 import { LIMIT } from "@constants/index.ts";
 export const prerender = true;
 
-// すべてのカテゴリのパスを取得
 export async function getStaticPaths() {
   const { contents: categories } = await getCategoryList();
   return categories.map((category) => ({
@@ -15,26 +14,22 @@ export async function getStaticPaths() {
   }));
 }
 
-// Astroの動的パラメータを取得
 const { id } = Astro.params;
 
-// カテゴリリストを取得
 const { contents: categories } = await getCategoryList();
 
-// ID に該当するカテゴリを取得
 const category = categories.find((cat) => cat.id === id);
 
-const Meta = {
-  title: category ? `${category.name} の記事一覧` : "カテゴリが見つかりません",
-};
-
-// カテゴリが存在しない場合、ブログ一覧を空にする
 const { contents: blogs, totalCount } = category
   ? await getBlogList({
       limit: LIMIT,
       filters: `category[contains]${category.id}`,
     })
   : { contents: [], totalCount: 0 };
+
+const Meta = {
+  title: category ? `${category.name} の記事一覧` : "カテゴリが見つかりません",
+};
 ---
 
 <Layout Meta={Meta}>

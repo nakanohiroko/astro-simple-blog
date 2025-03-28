@@ -4,11 +4,19 @@
 
 body {
   @apply font-body;
+  text-underline-offset: 0.3em;
 }
 
 /* 段落 */
 .entry-content p {
   @apply mb-4 leading-relaxed;
+}
+
+/* リンク */
+.entry-content a {
+  @apply underline text-blue-600 hover:underline hover:text-blue-800 transition;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
 }
 
 /* 画像とキャプション */

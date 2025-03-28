@@ -6,7 +6,6 @@ import Pagination from "@components/Pagination.astro";
 import { LIMIT } from "@constants/index.ts";
 export const prerender = true;
 
-// 静的ルートを生成
 export async function getStaticPaths() {
   const { contents: categories } = await getCategoryList();
   let paths = [];
@@ -25,21 +24,12 @@ export async function getStaticPaths() {
   return paths;
 }
 
-// パラメータを取得
 const { id, page } = Astro.params;
 const currentPage = Number(page) || 1;
 
-// カテゴリー情報を取得
 const { contents: categories } = await getCategoryList();
 const category = categories.find((cat) => cat.id === id);
 
-const Meta = {
-  title: category
-    ? `Page ${currentPage} | ${category.name} の記事一覧`
-    : "カテゴリが見つかりません",
-};
-
-// カテゴリーに紐づく記事を取得
 const { contents: blogs, totalCount } = category
   ? await getBlogList({
       limit: LIMIT,
@@ -47,6 +37,12 @@ const { contents: blogs, totalCount } = category
       filters: `category[contains]${category.id}`,
     })
   : { contents: [], totalCount: 0 };
+
+const Meta = {
+  title: category
+    ? `Page ${currentPage} | ${category.name} の記事一覧`
+    : "カテゴリが見つかりません",
+};
 ---
 
 <Layout Meta={Meta}>

@@ -8,32 +8,27 @@ import { LIMIT } from "@constants/index.ts";
 export const prerender = true;
 
 export async function getStaticPaths() {
-  // ブログの総記事数を取得
   const { totalCount } = await getBlogList({ limit: 1 });
   const totalPages = Math.ceil(totalCount / LIMIT);
 
-  // ページ数分のパスを生成
   return Array.from({ length: totalPages }).map((_, i) => ({
     params: { page: (i + 1).toString() },
   }));
 }
 
-// `page` パラメータを取得
 const { page } = Astro.params;
 const currentPage = Number(page) || 1;
 
-const Meta = {
-  title: `Page ${currentPage}`,
-};
-
-// 記事を取得
 const { contents: blogs, totalCount } = await getBlogList({
   limit: LIMIT,
   offset: (currentPage - 1) * LIMIT,
 });
 
-// カテゴリーリストを取得
 const { contents: categories } = await getCategoryList();
+
+const Meta = {
+  title: `Page ${currentPage}`,
+};
 ---
 
 <Layout Meta={Meta}>
