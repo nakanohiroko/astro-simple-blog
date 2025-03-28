@@ -12,33 +12,46 @@ import type { Category } from "@libs/microcms";
 
 const { blog } = Astro.props;
 
-const {
-  html,
-  data: { toc },
-} = await microCMSRichEditorHandler(blog.content, {
-  transformers: [
-    responsiveImageTransformer(),
-    codeBlockFileNameTransformer({
-      attributes: {
-        class: "fileName",
+type TocItem = {
+  id: string;
+  text: string;
+  level: number;
+};
+
+let html = "";
+let toc: TocItem[] = [];
+
+if (blog.content) {
+  const { html: transformedHtml, data } = await microCMSRichEditorHandler(
+    blog.content,
+    {
+      transformers: [
+        responsiveImageTransformer(),
+        codeBlockFileNameTransformer({
+          attributes: {
+            class: "fileName",
+          },
+        }),
+        syntaxHighlightingByShikiTransformer({
+          defaultHighlightOptions: {
+            lang: "javascript",
+            theme: "github-dark",
+          },
+        }),
+      ],
+      extractors: {
+        toc: [
+          tocExtractor({
+            ignoreLevels: [4, 5],
+          }),
+        ],
       },
-    }),
-    syntaxHighlightingByShikiTransformer({
-      defaultHighlightOptions: {
-        lang: "javascript",
-        theme: "github-dark",
-      },
-    }),
-  ],
-  extractors: {
-    toc: [
-      tocExtractor({
-        ignoreLevels: [4, 5],
-      }),
-      { phase: "before" },
-    ],
-  },
-});
+    }
+  );
+
+  html = transformedHtml;
+  toc = data.toc;
+}
 
 blog.content = html;
 ---
@@ -73,10 +86,14 @@ blog.content = html;
         <h2 class="text-lg font-semibold text-gray-700 mb-2">目次</h2>
         <ul class="space-y-1 text-sm text-gray-600">
           {toc.map((item) => {
+            const levelClass =
+              {
+                2: "ml-3",
+                3: "ml-6",
+              }[item.level] ?? "";
+
             return (
-              <li
-                class={`pl-4 border-l-2 border-gray-300 ${item.level === 2 ? "ml-3" : item.level === 3 ? "ml-6" : ""}`}
-              >
+              <li class={`pl-4 border-l-2 border-gray-300 ${levelClass}`}>
                 <a
                   href={`#${item.id}`}
                   class="block hover:text-blue-500 transition"
