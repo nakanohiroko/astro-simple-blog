@@ -30,6 +30,7 @@ const Meta = {
     ? blog.thumbnail.url
     : new URL("/assets/images/og.png", Astro.site),
   ogType: "article",
+  description: blog.description,
 };
 ---
 

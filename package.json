@@ -8,6 +8,9 @@
     "preview": "astro preview",
     "astro": "astro"
   },
+  "engines": {
+    "node": ">=18.x"
+  },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
     "@astrojs/vercel": "^8.1.3",

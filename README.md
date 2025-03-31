@@ -1,46 +1,68 @@
-# Astro Starter Kit: Basics
+# Astroを使用したシンプルなブログ
 
-```sh
-npm create astro@latest -- --template basics
+![](public/img-cover.png)
+
+Astroを使用したシンプルなブログのテンプレートです。
+
+## 動作環境
+
+Node.js 18 以上
+
+## 環境変数の設定
+
+ルート直下に`.env`ファイルを作成し、下記の情報を入力してください。
+
+```
+MICROCMS_API_KEY=xxxxxxxxxx
+MICROCMS_SERVICE_DOMAIN=xxxxxxxxxx
+BASE_URL=xxxxxxxxxx
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics) [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+`MICROCMS_API_KEY`  
+microCMS 管理画面の「サービス設定 > API キー」から確認することができます。
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+`MICROCMS_SERVICE_DOMAIN`  
+microCMS 管理画面の URL（https://xxxxxxxx.microcms.io）の xxxxxxxx の部分です。
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+`BASE_URL`
+デプロイ先の URL です。プロトコルから記載してください。
 
-## 🚀 Project Structure
+例）  
+開発環境 → http://localhost:3000  
+本番環境 → https://xxxxxxxx.vercel.app/ など
 
-Inside of your Astro project, you'll see the following folders and files:
+## 開発の仕方
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+1. パッケージのインストール
+
+```bash
+npm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+2. 開発環境の起動
 
-## 🧞 Commands
+```bash
+npm run dev
+```
 
-All commands are run from the root of the project, from a terminal:
+3. 開発環境へのアクセス  
+   [http://localhost:3000](http://localhost:3000)にアクセス
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## 画面プレビューの設定
 
-## 👀 Want to learn more?
+下書き状態のコンテンツをプレビューするために、microCMS管理画面にて画面プレビューの設定が必要です。
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+ブログAPIの「API設定 > 画面プレビュー」に下記のように設定してください。  
+※`your-domain`部分はデプロイ先のドメインに置き換えてください。（localhost指定でも動作します）
+
+![blog-preview](https://github.com/microcmsio/nextjs-simple-blog-template/assets/4659294/5045ac9e-3699-47b4-8927-4187114d75bd)
+
+設定後はコンテンツ編集画面にて画面プレビューボタンが利用可能になります。
+
+## Vercel へのデプロイ
+
+[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)から簡単にデプロイが可能です。
+
+リポジトリを紐付け、環境変数を `Environment Variables` に登録後、デプロイしてみましょう。
+
+![](public/img-vercel-settings.png)
