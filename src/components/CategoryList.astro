@@ -15,16 +15,20 @@ const { categories } = Astro.props;
     </div>
     <ul class="space-y-2 p-6">
       {
-        categories.map((category) => (
-          <li>
-            <a
-              href={`/category/${category.id}`}
-              class="text-sm hover:underline"
-            >
-              {category.name}
-            </a>
-          </li>
-        ))
+        categories.length === 0 ? (
+          <li class="text-sm text-muted-foreground">カテゴリがありません</li>
+        ) : (
+          categories.map((category) => (
+            <li>
+              <a
+                href={`/category/${category.id}`}
+                class="text-sm hover:underline"
+              >
+                {category.name}
+              </a>
+            </li>
+          ))
+        )
       }
     </ul>
   </div>

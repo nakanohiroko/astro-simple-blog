@@ -28,6 +28,12 @@ export interface Settings {
   about: string;
 }
 
+const DEFAULT_SETTINGS: Settings = {
+  title: "Set Your Title Here",
+  description: "Set Your Description Here",
+  about: "Set Your Text Here",
+};
+
 export const getBlogList = async (queries?: MicroCMSQueries) => {
   return await client.getList<Blog>({ endpoint: "blog", queries });
 };
@@ -48,6 +54,10 @@ export const getCategoryList = async (queries?: MicroCMSQueries) => {
 };
 
 export const getSettings = async (): Promise<Settings> => {
-  const data = await client.get({ endpoint: "settings" });
-  return data as Settings;
+  try {
+    const data = await client.get({ endpoint: "settings" });
+    return data as Settings;
+  } catch (error: any) {
+    return DEFAULT_SETTINGS;
+  }
 };
