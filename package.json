@@ -12,6 +12,7 @@
     "node": ">=18.x"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.4.0",
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource/noto-sans-jp": "^5.2.5",
     "@tailwindcss/typography": "^0.5.16",
