@@ -3,7 +3,7 @@ import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  site: "https://astro-simple-blog-black.vercel.app",
+  site: "https://astro-simple-blog-omega.vercel.app/",
   integrations: [tailwind()],
   adapter: vercel(),
 });
