@@ -50,3 +50,15 @@ npm run dev
 ![blog-preview](public/img-preview.png)
 
 設定後はコンテンツ編集画面にて画面プレビューボタンが利用可能になります。
+
+## Vercelへのデプロイ
+
+Vercelへデプロイする場合は、`@astrojs/vercel`をインストールし、`astro.config.mjs`にて以下を追加してください。
+
+```javascript
+import vercel from "@astrojs/vercel";
+
+export default defineConfig({
+  adapter: vercel(),
+});
+```
