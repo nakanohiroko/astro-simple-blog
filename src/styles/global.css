@@ -2,7 +2,6 @@
 
 @theme {
   --font-body: "Noto Sans JP", sans-serif;
-  --color-border: #e5e7eb;
 }
 
 @plugin "@tailwindcss/typography";
@@ -37,8 +36,12 @@
     border-top-color: #e5e7eb;
     border-bottom-color: #e5e7eb;
   }
-  a {
-    text-decoration: none;
+}
+
+@layer components {
+  .prose code::before,
+  .prose code::after {
+    content: none !important;
   }
 }
 
