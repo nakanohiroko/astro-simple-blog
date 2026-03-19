@@ -1,7 +1,11 @@
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
+import vercel from "@astrojs/vercel";
 
 export default defineConfig({
-  site: "https://astro-simple-blog-omega.vercel.app/",
-  integrations: [tailwind()],
+  site: "http://localhost:4321/",
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  adapter: vercel(),
 });

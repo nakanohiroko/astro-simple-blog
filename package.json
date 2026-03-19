@@ -12,14 +12,16 @@
     "node": ">=18.x"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^10.0.1",
     "@fontsource/noto-sans-jp": "^5.2.5",
     "@tailwindcss/typography": "^0.5.16",
-    "astro": "^5.5.6",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.0.6",
     "dayjs": "^1.11.13",
     "microcms-js-sdk": "^3.2.0",
     "microcms-rich-editor-handler": "^1.0.1",
-    "shiki": "^1.29.2"
+    "shiki": "^1.29.2",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
