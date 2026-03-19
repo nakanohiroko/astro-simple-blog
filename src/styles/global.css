@@ -1,6 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-body: "Noto Sans JP", sans-serif;
+  --color-border: #e5e7eb;
+}
+
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  .border {
+    border-color: #e5e7eb;
+  }
+  .border-b {
+    border-bottom-color: #e5e7eb;
+  }
+  .border-t {
+    border-top-color: #e5e7eb;
+  }
+  .border-l {
+    border-left-color: #e5e7eb;
+  }
+  .border-r {
+    border-right-color: #e5e7eb;
+  }
+  .border-s {
+    border-inline-start-color: #e5e7eb;
+  }
+  .border-e {
+    border-inline-end-color: #e5e7eb;
+  }
+  .border-x {
+    border-left-color: #e5e7eb;
+    border-right-color: #e5e7eb;
+  }
+  .border-y {
+    border-top-color: #e5e7eb;
+    border-bottom-color: #e5e7eb;
+  }
+  a {
+    text-decoration: none;
+  }
+}
 
 body {
   @apply font-body;
@@ -12,20 +52,24 @@ body {
   @apply mb-4 leading-relaxed;
 }
 
-/* リンク */
+/* リンク（a の text-decoration: none は @layer base で全局に適用） */
 .entry-content a {
-  @apply underline text-blue-600 hover:underline hover:text-blue-800 transition;
+  @apply underline text-blue-600 hover:underline hover:text-blue-800 transition font-normal;
   text-decoration-color: currentColor;
   text-decoration-thickness: 1px;
 }
 
 /* 画像とキャプション */
 .entry-content figure {
-  @apply mb-4;
+  @apply mt-0 mb-4;
+}
+
+.entry-content figure picture {
+  @apply mb-0;
 }
 
 .entry-content figure figcaption {
-  @apply leading-relaxed text-sm text-black/50 italic pt-1;
+  @apply leading-relaxed text-sm text-black/50 italic pt-0;
 }
 
 /* 見出し（h1〜h5） */
@@ -77,6 +121,11 @@ body {
   @apply bg-gray-100 font-semibold text-gray-800;
 }
 
+.entry-content th p,
+.entry-content tr p {
+  @apply pt-0 mt-0;
+}
+
 /* 箇条書き（ul/li, ol/li） */
 .entry-content ul {
   @apply list-disc pl-5 mb-4;
@@ -96,7 +145,7 @@ body {
 }
 
 .entry-content pre {
-  @apply p-4 overflow-x-auto;
+  @apply p-4 overflow-x-auto rounded-none m-0;
 }
 
 .entry-content code {
